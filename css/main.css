@@ -1,0 +1,1349 @@
+﻿@charset "UTF-8";
+/*
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-user-select: none;  for Firefox 
+    -webkit-user-select: none;  for Chrome 
+}
+
+input, input:before, input:after {
+    -webkit-user-select: initial;
+    -khtml-user-select: initial;
+    -moz-user-select: initial;
+    -ms-user-select: initial;
+    user-select: initial;
+}*/
+body {
+  font-family: "Helvetica Neue", Helvetica, '微軟正黑體', '新細明體', Arial, sans-serif;
+  background: #f5f5f5;
+  padding-top: 60px; }
+
+ul, li {
+  display: block;
+  margin: 0;
+  padding: 0;
+  list-style: none; }
+
+.side-out-background {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.4);
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: none; }
+  .side-out-background.active {
+    display: block;
+    z-index: 9000; }
+
+.side-out-content {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 280px;
+  height: 100%;
+  padding: 0 12px 0;
+  background-color: #FFFFFF;
+  overflow-y: scroll;
+  z-index: 9001;
+  transition: 0.2s ease-out; }
+  .side-out-content.active {
+    transform: translateX(-280px);
+    -ms-transform: translateX(-280px);
+    /* Internet Explorer */
+    -moz-transform: translateX(-280px);
+    /* Firefox */
+    -webkit-transform: translateX(-280px);
+    /* Safari 和 Chrome */
+    -o-transform: translateX(-280px);
+    /* Opera */ }
+
+.dog-img {
+  border-radius: 50%;
+  width: 200px;
+  height: 200px; }
+
+.main-menu {
+  min-height: 60px;
+  background-color: #239ad1;
+  border: none;
+  margin: 0px;
+  /*-ms-box-shadow: 0 0 6px 0 #666;
+    -moz-box-shadow: 0 0 6px 0 #666;
+    -webkit-box-shadow: 0 0 6px 0 #666;
+    -o-box-shadow: 0 0 6px 0 #666;
+    box-shadow: 0 0 6px 0 #666;*/ }
+
+.navbar-title {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: calc(50% - 100px);
+  width: 200px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 30px;
+  font-weight: 400;
+  text-align: center;
+  color: #FFF; }
+
+.navbar-filter {
+  display: block;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  color: #fff;
+  text-align: center; }
+  .navbar-filter > i {
+    font-size: 24px;
+    line-height: 60px; }
+  .navbar-filter:active {
+    background-color: #CCC; }
+
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+  transition: background .5s ease-in-out;
+  -moz-transition: background .5s ease-in-out;
+  -webkit-transition: background .5s ease-in-out;
+  font-size: 16px;
+  font-weight: 300;
+  padding-top: 20px;
+  padding-bottom: 20px; }
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  background: none;
+  color: #fff; }
+
+.navbar-default .navbar-nav > li > a:hover:before, .navbar-default .navbar-nav > li > a:focus:before, .navbar-default .navbar-nav > li > a:active:before {
+  -webkit-transform: translateY(0);
+  transform: translateY(0); }
+
+.navbar-default .navbar-nav > li > a:before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: #fff;
+  height: 4px;
+  -webkit-transform: translateY(-4px);
+  transform: translateY(-4px);
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out; }
+
+section p {
+  font-size: 18px;
+  color: #454545; }
+
+section h1.heading {
+  font-size: 24px;
+  color: #3b4952;
+  font-family: "微軟正黑體", Arial, 'Roboto', sans-serif;
+  line-height: 30px;
+  border-bottom: 5px solid #4a9c64;
+  margin-top: 0px;
+  padding-bottom: 15px; }
+
+.dog-btn:not(.btn-flat) {
+  width: 100%;
+  border-radius: 4px;
+  padding: 10px 15px;
+  font-size: 18px;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #239ad1;
+  cursor: pointer;
+  font-weight: 400;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  transition: 0.2s ease-out;
+  outline: 0 !important; }
+
+.dog-btn:active {
+  color: #fff;
+  background-color: #1f88b9;
+  box-shadow: none; }
+
+.personal .img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 10px; }
+
+.personal .name {
+  color: #fff;
+  font-size: 16px; }
+
+button.owl-dot {
+  outline: none; }
+
+.owl-dot.active span {
+  background: #DE1302 !important; }
+
+.swal2-popup .swal2-styled:focus {
+  box-shadow: none; }
+
+.swal2-popup .swal2-title {
+  font-size: 30px; }
+
+.swal2-popup .swal2-content {
+  font-size: 24px; }
+
+.swal2-popup .swal2-styled.swal2-confirm, .swal2-popup .swal2-styled.swal2-cancel {
+  font-size: 20px; }
+
+/* loadding style start */
+.loadding {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 250px);
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .loadding .hint {
+    text-align: center;
+    font-size: 16px; }
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  margin: 0 auto; }
+
+.lds-ellipsis div {
+  position: absolute;
+  top: 27px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: #FF5722;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0); }
+
+.lds-ellipsis div:nth-child(1) {
+  left: 6px;
+  animation: lds-ellipsis1 0.6s infinite; }
+
+.lds-ellipsis div:nth-child(2) {
+  left: 6px;
+  animation: lds-ellipsis2 0.6s infinite; }
+
+.lds-ellipsis div:nth-child(3) {
+  left: 26px;
+  animation: lds-ellipsis2 0.6s infinite; }
+
+.lds-ellipsis div:nth-child(4) {
+  left: 45px;
+  animation: lds-ellipsis3 0.6s infinite; }
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0); }
+  100% {
+    transform: scale(1); } }
+
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(1); }
+  100% {
+    transform: scale(0); } }
+
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(19px, 0); } }
+
+/* loadding style end*/
+/* dialog style start */
+.dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  /*display: flex;
+    visibility: hidden;*/
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 2000; }
+
+.dialog-content {
+  position: relative;
+  margin: 60px auto 0;
+  width: 350px;
+  min-height: 420px;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  -webkit-animation-name: animatescale;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatescale;
+  animation-duration: 0.4s; }
+
+/* Add Animation */
+@-webkit-keyframes animatescale {
+  from {
+    transform: scale(0); }
+  to {
+    transform: scale(1); } }
+
+@keyframes animatescale {
+  from {
+    transform: scale(0); }
+  to {
+    transform: scale(1); } }
+
+.dialog-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 30px;
+  cursor: pointer; }
+
+.dialog-active {
+  /*visibility: visible;*/
+  display: flex; }
+
+/* dialog style end */
+/* 404 error style start */
+.error-info {
+  width: 380px;
+  padding: 10px 0;
+  margin: 30px auto 0 auto;
+  text-align: center; }
+  .error-info img {
+    border-radius: 50%;
+    width: 200px;
+    height: 200px; }
+  .error-info h2 {
+    letter-spacing: 2px; }
+  .error-info h3 {
+    letter-spacing: 3px; }
+  .error-info p {
+    text-transform: capitalize;
+    letter-spacing: 5px;
+    margin: 20px 0 40px 0; }
+
+/* 404 error style end */
+/* form style start */
+.form {
+  width: 330px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
+  margin-bottom: 20px; }
+
+.form-base {
+  width: 330px;
+  /*background-color: rgb(247, 147, 71);*/
+  background-color: #FFF;
+  padding: 15px 23px 25px 23px; }
+  .form-base h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 18px; }
+  .form-base > img {
+    display: block;
+    width: 128px;
+    height: 128px;
+    margin: 0 auto; }
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative; }
+
+.form-control {
+  width: 100%;
+  border-radius: 4px;
+  padding: 10px 15px 10px 15px;
+  border: 1px solid #CCC;
+  color: #55606e;
+  font-size: 14px;
+  height: 50px;
+  /*padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 34px;
+    padding-right: 12px;*/
+  -webkit-transition: border-color ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s;
+  transition: border-color ease-in-out .15s; }
+  .form-control :focus {
+    border-color: #4a9c64;
+    /*background-color: #fafafa;*/
+    outline: 0 !important;
+    box-shadow: none; }
+  .form-control :focus ~ .fas {
+    color: #239ad1; }
+
+.form-control-feedback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 34px;
+  height: 34px;
+  text-align: center;
+  line-height: 50px; }
+
+.error-message {
+  color: red;
+  font-weight: bold;
+  float: right; }
+
+/* form style end */
+/* systemWrapper style start */
+#systemWrapper .content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 350px;
+  height: 400px;
+  margin: 50px auto;
+  box-shadow: 0 6px 17px 0 rgba(0, 0, 0, 0.1);
+  flex-direction: column; }
+  #systemWrapper .content > img {
+    width: 300px;
+    height: 300px; }
+  #systemWrapper .content > p {
+    margin: 10px 0;
+    font-size: 24px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: #FF0000; }
+
+/* systemWrapper style end */
+/* app_user_setting style start */
+#groupSettingWrapper {
+  margin: 20px 10px;
+  padding: 15px 0;
+  background: white;
+  -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09); }
+  #groupSettingWrapper h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 24px; }
+  #groupSettingWrapper .control-base {
+    border: 1px solid #009688; }
+    #groupSettingWrapper .control-base .control {
+      width: 300px;
+      margin: 0 auto; }
+      #groupSettingWrapper .control-base .control span {
+        font-size: 16px;
+        font-weight: bold; }
+      #groupSettingWrapper .control-base .control > input {
+        width: 100%;
+        padding: 10px 0px 10px 5px; }
+      #groupSettingWrapper .control-base .control > div {
+        display: inline-block;
+        vertical-align: middle; }
+      #groupSettingWrapper .control-base .control .title {
+        font-size: 16px;
+        margin-right: 15px; }
+  #groupSettingWrapper #lottery-time {
+    text-align: center;
+    font-size: 20px;
+    border: 5px solid rgba(93, 232, 192, 0.81); }
+
+#checkInWrapper {
+  margin: 20px 10px;
+  background: white;
+  -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09); }
+  #checkInWrapper .form {
+    width: auto; }
+  #checkInWrapper .form-base {
+    width: auto;
+    background-color: #e8e8e8; }
+    #checkInWrapper .form-base h2 {
+      font-size: 24px; }
+
+#userInformationWrapper {
+  margin: 20px 10px;
+  padding: 15px 0;
+  background: white;
+  -webkit-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09);
+  box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.09); }
+  #userInformationWrapper h2 {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 24px; }
+  #userInformationWrapper .alert {
+    text-align: center;
+    color: #f00;
+    font-size: 16px; }
+  #userInformationWrapper .app-user {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    /*box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);*/ }
+    #userInformationWrapper .app-user:not(:last-child) {
+      margin-bottom: 30px; }
+    #userInformationWrapper .app-user .account {
+      width: 100%;
+      padding: 20px 0;
+      /*background: #ccc;*/
+      background: #ffb675;
+      color: #000;
+      text-align: center;
+      font-size: 24px; }
+    #userInformationWrapper .app-user .control {
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px 0 20px 0px; }
+      #userInformationWrapper .app-user .control > div {
+        display: inline-block;
+        vertical-align: middle; }
+      #userInformationWrapper .app-user .control .title {
+        font-size: 16px;
+        margin-right: 15px; }
+
+/* app_user_style end */
+/* fix bootstrap-material-datetimepicker button style start */
+.btn-flat {
+  border: none;
+  border-radius: 2px;
+  position: relative;
+  padding: 5px 20px;
+  margin: 10px 1px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  will-change: box-shadow,transform;
+  -webkit-transition: -webkit-box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  -o-transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: box-shadow 0.2s cubic-bezier(0.4, 0, 1, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: 0;
+  cursor: pointer;
+  text-decoration: none;
+  background: 0 0; }
+  .btn-flat:hover {
+    background-color: rgba(153, 153, 153, 0.2); }
+
+/* fix bootstrap-material-datetimepicker button style end */
+/* statistics view style start */
+#type-category-tool {
+  padding: 10px 0; }
+  #type-category-tool .type {
+    padding: 10px 5px;
+    text-align: center;
+    font-size: 20px;
+    border: 2px solid #000;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: 0.3s; }
+  #type-category-tool .clock {
+    color: #009688;
+    border: 2px solid #009688; }
+  #type-category-tool .sticker {
+    color: #FF6B39;
+    border: 2px solid #FF6B39; }
+  #type-category-tool .question {
+    color: #FF5657;
+    border: 2px solid #FF5657; }
+  #type-category-tool .clock.active {
+    color: #fff;
+    background-color: #009688; }
+  #type-category-tool .sticker.active {
+    color: #fff;
+    background-color: #FF6B39; }
+  #type-category-tool .question.active {
+    color: #fff;
+    background-color: #FF5657; }
+
+.filter-tool {
+  position: relative;
+  padding: 10px 10px;
+  background-color: rgba(126, 228, 172, 0.4); }
+  .filter-tool .control {
+    margin: 20px 0px; }
+    .filter-tool .control > input {
+      width: 100%;
+      padding: 10px 0px 10px 5px; }
+
+#lotteryWrapper {
+  display: none; }
+  #lotteryWrapper .title {
+    margin: 15px 0; }
+
+.lottery {
+  position: relative;
+  height: 70px; }
+  .lottery:not(:first-child) {
+    border-top: 1px solid #D8D8D8; }
+  .lottery > div {
+    display: table;
+    text-align: center; }
+    .lottery > div > span {
+      display: table-cell;
+      vertical-align: middle; }
+
+.lottery-rank {
+  position: absolute;
+  left: 0px;
+  top: 10px;
+  width: 40px;
+  height: 50px; }
+
+.lottery-title {
+  position: absolute;
+  left: 45px;
+  top: 10px;
+  height: 50px;
+  width: calc(100% - 45px - 75px);
+  text-align: left !important; }
+
+.lottery-math {
+  position: absolute;
+  right: 0px;
+  top: 10px;
+  width: 70px;
+  height: 50px; }
+
+.lottery-number {
+  height: 25px;
+  color: #0086de;
+  font-weight: bold; }
+
+.lottery-percenterage {
+  height: 25px;
+  color: #d9501b;
+  font-weight: bold; }
+
+/* statistics style end */
+/* command style start */
+#commandWrapper .title {
+  margin: 15px 0; }
+
+.command {
+  padding: 10px;
+  border-top: 1px solid #CCC; }
+
+.command.active .command-btn > span::after {
+  content: none; }
+
+.command-name {
+  display: table;
+  position: relative;
+  width: 100%;
+  height: 50px;
+  font-size: 16px;
+  padding-left: 60px; }
+  .command-name > span {
+    display: table-cell;
+    vertical-align: middle; }
+
+.command-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  background-color: #61AFFE;
+  border: 1px solid #1aa3ff;
+  cursor: pointer; }
+  .command-btn > span {
+    position: relative; }
+    .command-btn > span:before {
+      content: '';
+      position: absolute;
+      left: 12px;
+      top: 22px;
+      width: 25px;
+      height: 5px;
+      background-color: white;
+      border-radius: 5px; }
+    .command-btn > span:after {
+      content: '';
+      position: absolute;
+      left: 22px;
+      top: 12px;
+      width: 5px;
+      height: 25px;
+      background-color: white;
+      border-radius: 5px; }
+
+.command-content {
+  display: none;
+  position: relative; }
+  .command-content > div:not(first-child) {
+    margin-top: 10px; }
+
+.command.active .command-content {
+  display: block; }
+
+.command-reply > b {
+  color: #e60f08; }
+
+.command-copy {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 20px;
+  width: 80px;
+  text-align: center;
+  line-height: 20px;
+  background-color: #FFFFFF;
+  font-weight: 300;
+  border: 1px solid #666666;
+  cursor: pointer; }
+
+/* command style end */
+/* coupon style start */
+.myModal {
+  display: none;
+  position: fixed;
+  z-index: 1200;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+  background-color: rgba(0, 0, 0, 0.9); }
+  .myModal .myModal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px; }
+  .myModal .myModal-close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s; }
+    .myModal .myModal-close:hover, .myModal .myModal-close:focus {
+      color: #bbb;
+      text-decoration: none;
+      cursor: pointer; }
+
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #fff;
+  padding: 10px 0; }
+
+#filterModal {
+  background-color: rgba(0, 0, 0, 0.5); }
+  #filterModal .myModal-close {
+    top: -15px;
+    right: -15px;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: #000;
+    background-color: #fff;
+    border-radius: 50%; }
+  #filterModal .myModal-center {
+    width: 300px;
+    height: 360px;
+    position: fixed;
+    left: calc(50% - 150px);
+    top: calc(50% - 190px);
+    background-color: #fff;
+    animation: appear 200ms ease-in;
+    animation-fill-mode: forwards; }
+  #filterModal .filter > div {
+    height: 60px;
+    line-height: 60px; }
+  #filterModal .filter-title {
+    background-color: #239ad1;
+    color: #fff;
+    text-align: center; }
+    #filterModal .filter-title > h2 {
+      margin: 0;
+      line-height: inherit;
+      font-weight: bold;
+      font-size: 1.5em; }
+  #filterModal .filter-control {
+    width: 260px;
+    margin-left: calc(50% - 130px);
+    font-size: 24px; }
+
+@keyframes move {
+  0% {
+    top: -300px;
+    opacity: 0; }
+  100% {
+    top: calc(50% - 150px);
+    opacity: 1; } }
+
+@keyframes appear {
+  0% {
+    transform: scale(0); }
+  100% {
+    transform: scale(1); } }
+
+#top-tool {
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  top: 0px;
+  left: calc(50% - 15px);
+  background-color: #239ad1;
+  color: #fff;
+  text-align: center;
+  border-radius: 100%;
+  z-index: 700;
+  transition: .2s ease-in-out; }
+  #top-tool > i {
+    line-height: 30px;
+    font-size: 18px; }
+
+#couponInfoWrapper {
+  max-width: 800px;
+  margin: 0px auto; }
+  #couponInfoWrapper .coupon-filter-tool {
+    display: none;
+    padding: 20px 20px 10px 20px;
+    background-color: #ffffff; }
+    #couponInfoWrapper .coupon-filter-tool .filter-control {
+      cursor: pointer;
+      background-color: #fff;
+      border: 1px solid #000;
+      font-size: 12px;
+      text-align: center;
+      padding: 10px 10px;
+      margin: 10px 0;
+      transition: all 0.2s; }
+      #couponInfoWrapper .coupon-filter-tool .filter-control.preferential-price.selected {
+        border-color: rgba(255, 109, 43, 0.78);
+        background-color: rgba(255, 109, 43, 0.78); }
+      #couponInfoWrapper .coupon-filter-tool .filter-control.buy-one-get-one-free.selected {
+        border-color: rgba(58, 86, 204, 0.88);
+        background-color: rgba(58, 86, 204, 0.88); }
+      #couponInfoWrapper .coupon-filter-tool .filter-control.one-dollar-also-steals.selected {
+        border-color: rgba(157, 48, 236, 0.77);
+        background-color: rgba(157, 48, 236, 0.77); }
+      #couponInfoWrapper .coupon-filter-tool .filter-control.buy-a-to-b.selected {
+        border-color: #20b769;
+        background-color: #20b769; }
+      #couponInfoWrapper .coupon-filter-tool .filter-control.selected {
+        border-color: #06a3e9;
+        background-color: #06a3e9;
+        color: #fff; }
+    #couponInfoWrapper .coupon-filter-tool .input-keyword {
+      position: relative;
+      background-color: #f7f7f7;
+      border-radius: 2px;
+      border: 1px solid rgba(0, 0, 0, 0.14);
+      padding: 10px;
+      margin-top: 10px; }
+      #couponInfoWrapper .coupon-filter-tool .input-keyword > input {
+        width: 100%;
+        background: transparent;
+        font-size: 16px;
+        outline: none;
+        box-shadow: none;
+        border: none; }
+      #couponInfoWrapper .coupon-filter-tool .input-keyword .cancel-button {
+        cursor: pointer;
+        width: 16px;
+        height: 16px;
+        position: absolute;
+        top: 50%;
+        right: 14px;
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%); }
+  #couponInfoWrapper .coupon {
+    position: relative;
+    height: 110px;
+    border-bottom: 1px solid #CCC;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+    #couponInfoWrapper .coupon .coupon-img {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      overflow: hidden; }
+      #couponInfoWrapper .coupon .coupon-img > img {
+        position: absolute;
+        width: 135px;
+        height: 240px;
+        top: -65px;
+        left: -25px; }
+    #couponInfoWrapper .coupon .buy-a-to-b-level {
+      color: green; }
+    #couponInfoWrapper .coupon .one-dollar-also-steals-level {
+      color: mediumpurple; }
+    #couponInfoWrapper .coupon .buy-one-get-one-free-level {
+      color: blue; }
+    #couponInfoWrapper .coupon .preferential-price-level {
+      color: darkorange; }
+    #couponInfoWrapper .coupon .coupon-shadow {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background-color: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      overflow: hidden;
+      z-index: 800; }
+    #couponInfoWrapper .coupon .coupon-ribbon {
+      position: relative;
+      top: 15px;
+      left: -25px;
+      width: 100px;
+      text-align: center;
+      background-color: #fff;
+      transform: rotate(-45deg); }
+    #couponInfoWrapper .coupon .not-open {
+      background-color: #2ab062; }
+    #couponInfoWrapper .coupon .limit-time {
+      background-color: red; }
+    #couponInfoWrapper .coupon .coupon-title {
+      position: absolute;
+      top: 5px;
+      left: 120px;
+      width: calc(80% - 105px);
+      height: 25px;
+      line-height: 25px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    #couponInfoWrapper .coupon .coupon-originalPrice {
+      position: absolute;
+      top: 30px;
+      left: 120px;
+      height: 25px;
+      line-height: 25px;
+      color: rgba(0, 0, 0, 0.4);
+      text-decoration: line-through; }
+      #couponInfoWrapper .coupon .coupon-originalPrice > span:last-child {
+        margin-left: 10px; }
+    #couponInfoWrapper .coupon .coupon-specialPrice {
+      position: absolute;
+      top: 55px;
+      left: 120px;
+      height: 25px;
+      line-height: 25px;
+      color: #ff5722;
+      font-weight: bold; }
+      #couponInfoWrapper .coupon .coupon-specialPrice > span:last-child {
+        margin-left: 10px; }
+    #couponInfoWrapper .coupon .coupon-type {
+      position: absolute;
+      top: 80px;
+      left: 120px;
+      width: calc(70% - 140px);
+      height: 25px;
+      line-height: 25px;
+      font-weight: bold; }
+    #couponInfoWrapper .coupon .coupon-love {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 20%;
+      height: 100px;
+      line-height: 100px;
+      text-align: center; }
+      #couponInfoWrapper .coupon .coupon-love > i {
+        font-size: 20px;
+        color: rgba(0, 0, 0, 0.35);
+        cursor: pointer; }
+        #couponInfoWrapper .coupon .coupon-love > i.love {
+          color: #dd1e36; }
+        #couponInfoWrapper .coupon .coupon-love > i > span {
+          margin: 0 10px;
+          color: rgba(0, 0, 0, 0.35);
+          font-weight: normal !important; }
+
+/* coupon style end */
+/* policy style start */
+#policyWrapper ul {
+  display: list-item;
+  margin: 0 0 10px 0;
+  padding: 0 0 0 40px; }
+  #policyWrapper ul > li {
+    display: list-item;
+    list-style: disc;
+    margin-bottom: 10px; }
+
+/* policy style end */
+/* my-sticker style start */
+#myStickerWrapper {
+  /* display: none; */
+  padding-top: 10px; }
+  #myStickerWrapper #app-user-target {
+    position: relative;
+    padding-left: 30px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 24px;
+    border-radius: 2px; }
+    #myStickerWrapper #app-user-target:before {
+      content: '';
+      position: absolute;
+      top: calc(50% - 10px);
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #FF5722; }
+  #myStickerWrapper .sticker-info {
+    font-size: 18px;
+    background: rgba(218, 213, 204, 0.57);
+    padding: 5px 0;
+    margin: 10px auto;
+    width: 322px; }
+    #myStickerWrapper .sticker-info > div {
+      margin: 10px 0;
+      text-align: center; }
+      #myStickerWrapper .sticker-info > div > span {
+        color: #f00; }
+  #myStickerWrapper .stickers {
+    display: none;
+    margin-bottom: 20px; }
+    #myStickerWrapper .stickers .sticker-card {
+      position: relative;
+      width: 322px;
+      margin: 0 auto; }
+      #myStickerWrapper .stickers .sticker-card .sticker-grid {
+        display: grid;
+        grid-template-columns: 160px 160px;
+        grid-template-rows: 160px 160px 160px;
+        grid-gap: 2px;
+        background: #e2e2e2; }
+        #myStickerWrapper .stickers .sticker-card .sticker-grid > div {
+          padding: 5px;
+          background: #fff; }
+        #myStickerWrapper .stickers .sticker-card .sticker-grid .sticker > img {
+          width: 150px;
+          height: 150px; }
+        #myStickerWrapper .stickers .sticker-card .sticker-grid .sticker-space {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 80px;
+          font-weight: bold;
+          color: #d8d8d8; }
+      #myStickerWrapper .stickers .sticker-card .sticker-card-mask {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000; }
+      #myStickerWrapper .stickers .sticker-card .sticker-redeem {
+        position: absolute;
+        top: calc(50% - 60px);
+        left: calc(50% - 60px);
+        width: 120px;
+        height: 120px;
+        font-size: 18px;
+        letter-spacing: 2px;
+        color: #000;
+        background: #fff;
+        border: none;
+        border-radius: 50%;
+        outline: none;
+        cursor: pointer;
+        z-index: 1001; }
+        #myStickerWrapper .stickers .sticker-card .sticker-redeem:active {
+          background: #ddd; }
+    #myStickerWrapper .stickers.active {
+      display: block; }
+
+/* my-sticker style end */
+/* my-coupon style start */
+.setting {
+  font-size: 18px; }
+  .setting .label-text:before {
+    margin-right: 10px !important; }
+
+.app-user-list .title {
+  padding: 14px 0 8px;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px; }
+
+.app-user-list .content > ul > li {
+  padding: 20px 10px;
+  margin: 10px 0 10px;
+  font-size: 18px;
+  letter-spacing: 2px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #dcdcdc;
+  cursor: pointer;
+  transition: all 0.2s; }
+  .app-user-list .content > ul > li.active {
+    color: #fff;
+    background: #fb9c49; }
+
+#myCouponInfo .content {
+  padding: 15px 15px 10px;
+  font-size: 18px; }
+  #myCouponInfo .content > div {
+    margin: 15px 0 0; }
+  #myCouponInfo .content .flex-img {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    #myCouponInfo .content .flex-img .img {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      overflow: hidden; }
+      #myCouponInfo .content .flex-img .img img {
+        position: absolute;
+        top: calc(100% * -0.65);
+        left: calc(100% * -0.25);
+        width: calc(100% * 1.35);
+        height: calc(100% * 2.4); }
+  #myCouponInfo .content .info {
+    font-size: 16px; }
+    #myCouponInfo .content .info table {
+      width: 100%; }
+      #myCouponInfo .content .info table td {
+        padding: 15px 0;
+        letter-spacing: 2px; }
+      #myCouponInfo .content .info table td:nth-child(1) {
+        width: 30%;
+        color: #000;
+        text-align: left; }
+      #myCouponInfo .content .info table td:nth-child(2) {
+        width: 70%;
+        color: #FF5722;
+        text-align: right;
+        font-family: Helvetica Neue,Helvetica,Arial,\\6587\6CC9\9A5B\6B63\9ED1,WenQuanYi Zen Hei,Hiragino Sans GB,\\5137\9ED1 Pro,LiHei Pro,Heiti TC,\\5FAE\8EDF\6B63\9ED1\9AD4,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif; }
+        #myCouponInfo .content .info table td:nth-child(2):not(#coupon-category) {
+          font-weight: bold; }
+  #myCouponInfo .content .category {
+    padding: 10px 10px;
+    border-radius: 4px;
+    letter-spacing: 2px;
+    color: #FFFFFF; }
+  #myCouponInfo .content .clock {
+    background-color: #009688; }
+  #myCouponInfo .content .sticker {
+    background-color: #FF6B39; }
+  #myCouponInfo .content .question {
+    background-color: #FF5657; }
+
+#myCouponWrapper {
+  /*display: none;*/
+  padding-top: 10px; }
+  #myCouponWrapper #app-user-target {
+    position: relative;
+    padding-left: 30px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-size: 24px;
+    border-radius: 2px; }
+    #myCouponWrapper #app-user-target:before {
+      content: '';
+      position: absolute;
+      top: calc(50% - 10px);
+      left: 0;
+      width: 20px;
+      height: 20px;
+      background: #FF5722; }
+  #myCouponWrapper .all-coupon {
+    position: relative; }
+    #myCouponWrapper .all-coupon .coupons {
+      width: 100%;
+      display: none; }
+      #myCouponWrapper .all-coupon .coupons .my-coupon {
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.25rem; }
+        #myCouponWrapper .all-coupon .coupons .my-coupon .main {
+          position: relative;
+          padding: 5px 0 15px; }
+        #myCouponWrapper .all-coupon .coupons .my-coupon .img {
+          position: relative;
+          margin: 10px auto 20px;
+          width: 200px;
+          height: 200px;
+          overflow: hidden; }
+          #myCouponWrapper .all-coupon .coupons .my-coupon .img .mask {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            letter-spacing: 4px; }
+          #myCouponWrapper .all-coupon .coupons .my-coupon .img img {
+            position: absolute;
+            top: calc(100% * -0.65);
+            left: calc(100% * -0.25);
+            width: calc(100% * 1.35);
+            height: calc(100% * 2.4); }
+        #myCouponWrapper .all-coupon .coupons .my-coupon .redeem-end-datetime {
+          height: 60px;
+          font-size: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          background-color: #777575; }
+        #myCouponWrapper .all-coupon .coupons .my-coupon .detail {
+          width: 100%;
+          border-radius: 4px;
+          padding: 10px 15px;
+          font-size: 18px;
+          border: 2px solid #239ad1;
+          color: #111111;
+          background: none;
+          cursor: pointer;
+          font-weight: 400;
+          outline: 0 !important;
+          transition: 0.2s ease-out; }
+        #myCouponWrapper .all-coupon .coupons .my-coupon .detail:active {
+          color: #fff;
+          background: #239ad1; }
+      #myCouponWrapper .all-coupon .coupons.active {
+        display: block; }
+
+/* my-coupon style end */
+/* line activity style start */
+#InsertLineActivityWrapper > div > div, #FbWrapper > div > div {
+  margin: 10px 0; }
+  #InsertLineActivityWrapper > div > div > input, #FbWrapper > div > div > input {
+    padding: 15px 5px;
+    width: 100%;
+    font-size: 16px; }
+  #InsertLineActivityWrapper > div > div > textarea, #FbWrapper > div > div > textarea {
+    padding: 15px 5px;
+    width: 100%;
+    height: 100px; }
+
+#InsertLineActivityWrapper #barcode, #FbWrapper #barcode {
+  margin: 0 auto; }
+
+#InsertLineActivityWrapper #results > div, #InsertLineActivityWrapper #records > div, #FbWrapper #results > div, #FbWrapper #records > div {
+  position: relative;
+  border: 2px solid rgba(255, 93, 5, 0.7);
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  padding: 15px 20px;
+  margin: 10px 0px; }
+  #InsertLineActivityWrapper #results > div.record, #InsertLineActivityWrapper #records > div.record, #FbWrapper #results > div.record, #FbWrapper #records > div.record {
+    border: 2px solid rgba(79, 199, 82, 0.7); }
+  #InsertLineActivityWrapper #results > div button, #InsertLineActivityWrapper #records > div button, #FbWrapper #results > div button, #FbWrapper #records > div button {
+    margin-left: 30px;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 16px;
+    border: 1px solid transparent;
+    color: #fff;
+    background-color: #b49898;
+    cursor: pointer;
+    font-weight: 400;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 6px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    transition: 0.2s ease-out;
+    outline: 0 !important; }
+  #InsertLineActivityWrapper #results > div button:active, #InsertLineActivityWrapper #records > div button:active, #FbWrapper #results > div button:active, #FbWrapper #records > div button:active {
+    color: #fff;
+    background-color: #fe8585;
+    box-shadow: none; }
+
+#LineActivityWrapper > div > div {
+  margin: 20px 0;
+  padding: 10px 0;
+  border-bottom: 1px solid #20b769;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 2px; }
+
+#LineActivityWrapper > div > p {
+  text-align: center;
+  color: #f00;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 2px; }
+
+/* line activity style end */
+/* rwd style start */
+@media (max-width: 480px) {
+  .navbar-title {
+    display: block; }
+  .navbar-header {
+    width: 100%; } }
+
+@media (max-width: 640px) {
+  .navbar-header {
+    float: left;
+    margin: 0px !important; } }
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 0px; }
+  .navbar-fixed-top {
+    position: relative; }
+  .navbar-default .navbar-toggle {
+    border: none; }
+  .navbar-title {
+    display: block; }
+  .navbar-toggle {
+    display: block;
+    float: left;
+    margin-right: 8px;
+    padding: 14px 10px;
+    margin: 9px auto; }
+  .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    background: transparent; }
+  .navbar-default .navbar-toggle .icon-bar {
+    background-color: #eee; }
+  .navbar-fixed-bottom .navbar-collapse, .navbar-fixed-top .navbar-collapse {
+    max-height: inherit;
+    border-color: #fff; }
+  .navbar-nav {
+    margin: 0px;
+    position: relative; }
+  .navbar-collapse {
+    position: static;
+    width: 100vw; }
+  .navbar-default .navbar-nav > li > a:before {
+    content: none; }
+  .navbar-default .navbar-nav > li > a:active {
+    background: #e0dada;
+    color: #000; }
+  /* 複寫boostrap的css */
+  .navbar-right {
+    position: absolute;
+    top: 0;
+    right: 0; } }
+
+@media (max-width: 1024px) {
+  .navbar-default .navbar-nav > li > a {
+    font-size: 14px;
+    padding: 20px 10px; } }
+
+/* rwd style end */

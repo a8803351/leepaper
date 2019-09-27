@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="theme-color" content="#239ad1" />
+
+    <title>賣報狗 - FB 活動</title>
+
+    <link href="./css/bootstrap_v3.3.4.css" rel="stylesheet" />
+
+    <link href="./css/main.css?2019/9/27 下午 10:40:55" rel="stylesheet" />
+
+</head>
+
+<body>
+    <header>
+        <nav class="navbar main-menu navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!--
+                    <a class="navbar-brand" href="index.aspx" title="logo">
+                        <img src="assets/images/logo.png" alt="">
+                    </a>
+                    -->
+                </div>
+                <div class="navbar-collapse collapse pull-left">
+                    <ul class="nav navbar-nav menu" id="menu">
+                    </ul>
+                </div>
+                <div class="navbar-title">
+                    賣報狗
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+    </header>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+
+    <script src="./js/bootstrap_v3.3.4.js"></script>
+
+    <script src="./js/js.cookie.min.js"></script>
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123902681-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-123902681-2');
+    </script>
+
+
+
+
+    <style>
+        body {
+            font-family: 'Noto Sans TC', 'Heiti TC', STHeiti, HelveticaNeueLTPro-Hv, 微軟正黑體, 'Microsoft JhengHei', sans-serif !important;
+        }
+
+        .all_wrapper,
+        .wrapper {
+            position: fixed;
+            top: 0;
+            width: 640px;
+            height: 1135px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .wrapper {
+            display: none;
+            transform-origin: top left;
+        }
+
+        .game_win1,
+        .game_win_rule,
+        .qrcode {
+            display: none;
+        }
+
+        .game .fail,
+        .game .success,
+        .game .success_had_get,
+        .game_win {
+            display: none;
+        }
+
+        .game_win {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 640px;
+            height: 1135px;
+        }
+
+        .game_win .game_win_wrapper {
+            position: absolute;
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            width: 570px;
+            height: 750px;
+            top: 50%;
+            margin-top: -375px;
+            left: 30px;
+            background-color: #a98f7e;
+            -webkit-box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .75);
+            -moz-box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .75);
+            box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .75);
+        }
+
+        .game_win .game_win_wrapper .game_win_inner {
+            display: flex;
+            flex-flow: row nowrap;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_left {
+            width: 35%;
+            padding-left: 25px;
+            padding-top: 38px;
+            box-sizing: initial;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_left .game_win_inner_left_barcode {
+            padding: 30px 25px;
+            -moz-border-radius: 20px;
+            -webkit-border-radius: 20px;
+            border-radius: 20px;
+            border: 4px solid #c9b697;
+            background-color: #fcf4e2;
+            height: 660px;
+            box-sizing: border-box;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_left .game_win_inner_left_barcode .game_win_inner_left_barcode_img {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_left .game_win_inner_left_barcode .game_win_inner_left_barcode_img img {
+            transform: rotate(-90deg) translate(-590px, 0);
+            transform-origin: top left;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_left .game_pin_code {
+            transform: rotate(-90deg) translate(20px, 124px);
+            transform-origin: top left;
+            width: 550px;
+            font-size: 25px;
+            text-align: center;
+            top: 0;
+            margin-top: 0;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_right {
+            width: 55%;
+            padding-top: 20px;
+            padding-left: 10px;
+            padding-right: 10px;
+            box-sizing: border-box;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_right .game_win_inner_text {
+            text-align: center;
+            font-size: 19px;
+            line-height: 34px;
+            padding-bottom: 30px;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_right .game_win_inner_share {
+            -moz-border-radius: 15px;
+            -webkit-border-radius: 15px;
+            border-radius: 15px;
+            border: 4px solid #fcf4e2;
+            background-color: #c9b697;
+            width: 256px;
+            height: 68px;
+            font-size: 23px;
+            color: #382d24;
+            box-sizing: border-box;
+            padding-top: 15px;
+            padding-left: 30px;
+            line-height: 28px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 auto;
+            -webkit-box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .75);
+            -moz-box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .75);
+            box-shadow: 4px 4px 5px 0 rgba(0, 0, 0, .75);
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_right .game_win_inner_rule {
+            font-size: 24px;
+            color: #fcf4e2;
+            text-align: center;
+            text-decoration: underline;
+            padding-top: 20px;
+            padding-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner .game_win_inner_right .game_win_icon {
+            text-align: center;
+        }
+
+        .game_win .game_win_wrapper .game_win_inner_close {
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+    </style>
+
+    <div id="FbWrapper">
+        <div class="container">
+            <h4> FB 活動 </h4>
+            <div>
+                <input id="data_code" type="text" placeholder="資料代號 (方便儲存或匯入資料) 資料只會在本機" />
+            </div>
+            <div>
+                <input id="save" type="button" value="儲存資料" />
+            </div>
+            <div>
+                <input id="input" type="button" value="匯入資料" />
+            </div>
+            <div>
+                <textarea id="input_data" placeholder="匯入區"></textarea>
+            </div>
+            <div>
+                <input id="input_cookie" type="button" value="匯入其他網站的資料" />
+            </div>
+            <div>
+                <input id="fb_uid" type="text" placeholder="fb_uid" />
+            </div>
+            <div>
+                <input id="fb_sig" type="text" placeholder="fb_sig" />
+            </div>
+            <div>
+                <input id="fb_name" type="text" placeholder="fb_name" />
+            </div>
+            <div>
+                <input id="speed" type="text" placeholder="速度 (毫秒) 務必填正整數 壞掉不負責" />
+            </div>
+            <div id="barcode"></div>
+            <div>
+                <div>
+                    <h4 style="display: inline-block;">中 獎 紀 錄</h4><input type="button" id="show_records"
+                        style="display: inline-block; margin-left: 10px; padding: 10px 20px;" value="縮小" />
+                </div>
+                <div id="records">
+
+                </div>
+            </div>
+            <div>
+                <input id="search" type="button" value="查詢獎品數量" />
+            </div>
+            <div>
+                <h4 id="prizes">目前獎品數量： </h4>
+            </div>
+            <div>
+                <input id="lottery" type="button" value="抽" />
+            </div>
+            <div>
+                <input id="clear_data" type="button" value="清除抽獎數據" />
+            </div>
+            <div>
+                <textarea id="results2" placeholder="所有結果"></textarea>
+                <h4>中 獎 結 果</h4>
+                <div id="results">
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrapper" style="transform: scale(0.73);height: 1136px;">
+        <div class="game_win game_win1" style="height: 1136px;">
+            <div class="game_win_wrapper">
+                <div class="game_win_inner">
+                    <div class="game_win_inner_left">
+                        <div class="game_win_inner_left_barcode">
+                            <div id="barcodeTarget1" class="game_win_inner_left_barcode_img">
+                                <img src="" alt="">
+                            </div>
+                            <div class="game_pin_code">PIN碼識別碼: <span id="piz1">---------</span></div>
+                        </div>
+
+                    </div>
+
+                    <div class="game_win_inner_right">
+                        <div class="game_win_inner_img">
+                            <img src="/Images/game1.jpg" alt="">
+                        </div>
+                        <div class="game_win_inner_text">
+                            <p>兌換期間<span class="during_event">9/18(三)12:00-10/8(二)23:59</span></p>
+                        </div>
+
+
+                        <div class="game_win_inner_share share">
+                            <span class="game_win_share_fb">分享遊戲至臉書</span>
+                        </div>
+
+                        <div class="game_win_inner_rule">兌獎辦法與注意事項</div>
+                        <div class="game_win_icon"><img src="/Images/icon.jpg" alt=""></div>
+
+                    </div>
+                </div>
+                <div class="game_win_inner_close"><img src="/Images/close.png" alt=""></div>
+            </div>
+        </div>
+
+        <div class="game_win game_win2" style="height: 1136px;">
+            <div class="game_win_wrapper">
+                <div class="game_win_inner">
+                    <div class="game_win_inner_left">
+                        <div class="game_win_inner_left_barcode">
+                            <div id="barcodeTarget2" class="game_win_inner_left_barcode_img">
+                                <img src="" alt="">
+                            </div>
+                            <div class="game_pin_code">PIN碼識別碼:<span id="piz2">---------</span></div>
+                        </div>
+
+                    </div>
+
+                    <div class="game_win_inner_right">
+                        <div class="game_win_inner_img">
+                            <img src="/Images/game2.jpg" alt="">
+                        </div>
+                        <div class="game_win_inner_text">
+                            <p>兌換期間<span class="during_event">9/18(三)12:00-10/8(二)23:59</span></p>
+                        </div>
+
+                        <div class="game_win_inner_share share">
+                            <span class="game_win_share_fb">分享遊戲至臉書</span>
+                        </div>
+
+                        <div class="game_win_inner_rule">兌獎辦法與注意事項</div>
+                        <div class="game_win_icon"><img src="/Images/icon.jpg" alt=""></div>
+
+                    </div>
+                </div>
+                <div class="game_win_inner_close"><img src="/Images/close.png" alt=""></div>
+            </div>
+        </div>
+
+        <div class="game_win game_win3" style="height: 1136px;">
+            <div class="game_win_wrapper">
+                <div class="game_win_inner">
+                    <div class="game_win_inner_left">
+                        <div class="game_win_inner_left_barcode">
+                            <div id="barcodeTarget3" class="game_win_inner_left_barcode_img">
+                                <img src="" alt="">
+                            </div>
+                            <div class="game_pin_code">PIN碼識別碼:<span id="piz3">---------</span></div>
+                        </div>
+
+                    </div>
+
+                    <div class="game_win_inner_right">
+                        <div class="game_win_inner_img">
+                            <img id="game_win3_img" src="/Images/game3.jpg" alt="">
+                        </div>
+                        <div class="game_win_inner_text">
+                            <p>兌換期間<span class="during_event">9/18(三)12:00-10/8(二)23:59</span></p>
+                        </div>
+
+                        <div class="game_win_inner_share share">
+                            <span class="game_win_share_fb">分享遊戲至臉書</span>
+                        </div>
+
+                        <div class="game_win_inner_rule">兌獎辦法與注意事項</div>
+                        <div class="game_win_icon"><img src="/Images/icon.jpg" alt=""></div>
+
+                    </div>
+                </div>
+                <div class="game_win_inner_close"><img src="/Images/close.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="/Scripts/jquery-barcode.js"></script>
+
+    <script>
+        var lottery_records = [];
+        var results = [];
+        var is_running = false;
+        var time_function;
+        var count = 0;
+        var speed;
+        var data_code = "";
+        var show_records = true;
+
+        function updateRecords() {
+            $("#records").empty();
+
+            lottery_records.forEach(function (n, index) {
+                $("#records").append("<div class='record'>" + "第 " + (index + 1) + " 個中獎紀錄: 獎品 - " + n.prize_name + " 序號: " + n.barcode + "<button class='show_barcode' onclick='show_barcode(this)' data-barcode='" + n.barcode + "' data-pin='" + n.pin + "' data-prize-type='" + n.prize_type + "' data-prize-name='" + n.prize_name + "'>顯示條碼</button></div>");
+            });
+        }
+
+        //產生min到max之間的亂數
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+
+        function show_barcode(element) {
+            /*console.log($(element).data("code"));
+            var style = {
+                output: "svg",
+                    bgColor: "#fcf4e2",
+                    color: "#000000",
+                    barWidth: 2,
+                    barHeight: 100,
+                    moduleSize: 5,
+                    posX: 0,
+                    posY: 0,
+                    addQuietZone: 1
+            };
+    
+            $("#barcode").barcode($(element).data("code"), "code39", style);*/
+
+
+            // console.log($(element).data("barcode") + " " + $(element).data("pin") + " " + $(element).data("prize-name") + " " + $(element).data("prize-type"));
+
+            let prize_type = parseInt($(element).data("prize-type"));
+            let barcode = $(element).data("barcode");
+            let pin = $(element).data("pin");
+            let style = {
+                output: "svg",
+                bgColor: "#fcf4e2",
+                color: "#000000",
+                barWidth: 2,
+                barHeight: 100,
+                moduleSize: 5,
+                posX: 0,
+                posY: 0,
+                addQuietZone: 1
+            };
+
+            if ($(window).width() > 640) {
+                $("#barcode").barcode(barcode, "code39", style);
+                return;
+            }
+
+            if (prize_type == 1) {
+                $("#barcodeTarget1").html("").show().barcode(barcode, "code39", style);
+                $("#piz1").text(pin);
+                $(".game_win1").show();
+            }
+            else if (prize_type == 2) {
+                $("#barcodeTarget2").html("").show().barcode(barcode, "code39", style);
+                $("#piz2").text(pin);
+                $(".game_win2").show();
+            }
+            else {
+                $("#barcodeTarget3").html("").show().barcode(barcode, "code39", style);
+                $("#piz3").text(pin);
+
+                /*
+                let url = "https://apps-2278608585552131.apps.fbsbx.com/instant-bundle/1917884978312625/2247255742068580";
+    
+                if (prize_type == 3) {
+                    $("#game_win3_img").attr("src", url + "img/game/game3.jpg");
+                }
+                else if (prize_type == 4) {
+                    $("#game_win3_img").attr("src", url + "img/game/game4.jpg");
+                }
+                else if (prize_type == 5) {
+                    $("#game_win3_img").attr("src", url + "img/game/game5.jpg");
+                }
+                else if (prize_type = 6) {
+                    $("#game_win3_img").attr("src", url + "img/game/game6.jpg");
+                }
+                else if (prize_type == 7) {
+                    $("#game_win3_img").attr("src", url + "img/game/game7.jpg");
+                }*/
+
+                $(".game_win3").show();
+            }
+
+            $(".game_win_inner_left_barcode_img").css("overflow", "hidden");
+            $(".game_win_inner_left_barcode_img").css("width", "120px");
+
+            $(".wrapper").show();
+        }
+
+        $(document).ready(function () {
+            $("#input_cookie").click(function () {
+                var input_data = $("#input_data").val();
+                if (input_data == "") {
+                    alert("請填入資料");
+                }
+                else {
+                    let temp = JSON.parse(input_data);
+                    for (var i = 0; i < temp.length; i++) {
+                        let name = Object.keys(temp[i])[0];
+                        let value = temp[i][name];
+                        Cookies.set(name, JSON.stringify(value), { expires: 365 });
+                    }
+                }
+            });
+
+            $("#show_records").click(function () {
+                show_records = !show_records;
+
+                if (show_records == false) {
+                    $(this).val("展開");
+                }
+                else {
+                    $(this).val("縮小");
+                }
+
+                $("#records").slideToggle();
+            });
+
+            $("#save").click(function () {
+                data_code = $("#data_code").val();
+
+                if (data_code != "") {
+                    var result = true;
+
+                    if (Cookies.get(data_code) != null) {
+                        result = confirm("發現有此代號的資料存在，確定要覆蓋過去嗎？");
+                    }
+
+                    if (result == true) {
+                        var data = {};
+                        data.fb_uid = $("#fb_uid").val();
+                        data.fb_sig = $("#fb_sig").val();
+                        data.fb_name = $("#fb_name").val();
+                        data.speed = $("#speed").val();
+                        data.lottery_records = lottery_records;
+                        Cookies.set(data_code, JSON.stringify(data), { expires: 365 });
+                    }
+                }
+                else {
+                    alert("資料代號不可空白！");
+                }
+            });
+
+            $("#input").click(function () {
+                data_code = $("#data_code").val();
+
+                var text = Cookies.get(data_code);
+                if (text != null && data_code != "") {
+                    var data = JSON.parse(text);
+                    $("#fb_uid").val(data.fb_uid);
+                    $("#fb_sig").val(data.fb_sig);
+                    $("#fb_name").val(data.fb_name);
+                    $("#speed").val(data.speed);
+                    lottery_records = data.lottery_records;
+                    updateRecords();
+                }
+                else {
+                    alert("找不到此資料代號！");
+                }
+            });
+
+            $(".game_win_inner_close").click(function () {
+                $(".wrapper").hide();
+                $(".game_win").hide();
+            })
+
+            var t = $(window).width() / 640;
+            t = t.toFixed(2);
+
+            var n = function () {
+                t = $(window).width() / 640;
+                t = t.toFixed(2);
+                $(".wrapper").css({
+                    "-webkit-transform": "scale(" + t + ")",
+                    "-moz-transform": "scale(" + t + ")",
+                    "-ms-transform": "scale(" + t + ")",
+                    "-o-transform": "scale(" + t + ")",
+                    transform: "scale(" + t + ")"
+                });
+                var e = window.innerHeight, n = Math.floor(640 / (window.innerWidth / window.innerHeight));
+                $(".wrapper").height(n);
+                $(".sound").height(n);
+                $(".home").height(n);
+                $(".qrcode").height(n);
+                $(".home_gif_recode_page").height(n);
+                $(".popup").height(n);
+                $(".game_win").height(n);
+                $(".game").height(n);
+                $(".all_wrapper").height(e + "px");
+            };
+            $(window).resize(function () {
+                n();
+            })
+
+            n();
+
+            $("#search").click(function () {
+                var data = {};
+                data.fb_uid = $("#fb_uid").val();
+                data.fb_sig = $("#fb_sig").val();
+                data.fb_name = $("#fb_name").val();
+
+                $("#prizes").text("目前獎品數量: ---- ");
+
+                // "https://iced-latte.fami.red-digital.com/api/get-status"
+                $.ajax({
+                    url: "https://iced-latte.fami.red-digital.com/api/get-status",
+                    data: data,
+                    type: "POST",
+                    headers: {
+                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    },
+                    beforeSend: function (e) { },
+                    success: function (n) {
+                        if (n.success == 0) {
+                            $("#prizes").text("目前獎品數量: " + n.msg);
+                        }
+                        else if (n.success == 1) {
+                            $("#prizes").text("目前獎品數量: " + n.prizes);
+                        }
+                    },
+                    error: function (n) {
+                        $("#prizes").text("目前獎品數量: " + "連線逾時或者伺服器錯誤");
+                    }
+                });
+            });
+
+            $("#clear_data").click(function () {
+                if (count != 0) {
+                    var result = confirm("警告，確定清除抽獎數據嗎？一旦清除就無法挽回了！");
+                    if (result == true) {
+                        count = 0;
+                        results = [];
+                        $("#results").empty();
+                        $("#results2").val("");
+                    }
+                }
+            });
+
+            $("#lottery").click(function () {
+                speed = parseInt($("#speed").val());
+
+                if (isNaN(speed)) {
+                    alert("麻煩填正整數");
+                    return;
+                }
+
+                if (speed < 100) {
+                    alert("麻煩請填100毫秒以上 拜託了。");
+                    return;
+                }
+
+                is_running = !is_running;
+
+                if (is_running) {
+                    $("#clear_data").prop("disabled", true);
+                    $(this).attr("value", "停");
+                    time_function = setInterval(function () {
+                        lottery();
+                    }, speed);
+                }
+                else {
+                    $("#clear_data").prop("disabled", false);
+                    $(this).attr("value", "抽");
+                    clearInterval(time_function);
+                }
+            });
+
+            function lottery() {
+                var data = {};
+                data.fb_uid = $("#fb_uid").val();
+                data.fb_sig = $("#fb_sig").val();
+                data.score = 30;
+                // getRandom(22, 30);
+                data.fb_name = $("#fb_name").val();
+                // "https://iced-latte.fami.red-digital.com/api/get-result"
+                $.ajax({
+                    url: "https://iced-latte.fami.red-digital.com/api/get-result",
+                    data: data,
+                    type: "POST",
+                    headers: {
+                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                    },
+                    beforeSend: function (e) { },
+                    success: function (n) {
+                        count++;
+                        // n = { success: 1, won: 1, prize_type: 3, barcode: "ABCDEFG12345678", pin: "ABCDEFG12345678" };
+                        if (n.success == 0) {
+                            $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: " + n.msg + "</div>");
+                            if (n.msg == "今天已經抽過獎項") {
+                                $("#lottery").attr("value", "抽");
+                                $("#clear_data").prop("disabled", false);
+                                is_running = false;
+                                clearInterval(time_function);
+                            }
+                        }
+                        else if (n.success == 1) {
+                            if (n.won == 2) {
+                                $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 沒中</div>");
+                            }
+                            else if (n.won == 1) {
+                                let prize_name = "";
+
+                                if (n.prize_type == 1) {
+                                    prize_name = "免費大冰拿";
+                                }
+                                else if (n.prize_type == 2) {
+                                    prize_name = "大冰拿買一送一";
+                                }
+                                else if (n.prize_type == 3) {
+                                    prize_name = "珐瑯杯(粉)";
+                                }
+                                else if (n.prize_type == 4) {
+                                    prize_name = "珐瑯杯(藍)";
+                                }
+                                else if (n.prize_type == 5) {
+                                    prize_name = "珐瑯杯(黑)";
+                                }
+                                else if (n.prize_type == 6) {
+                                    prize_name = "珐瑯杯(白)";
+                                }
+                                else if (n.prize_type == 7) {
+                                    prize_name = "珐瑯杯(黃)";
+                                }
+
+                                n.prize_name = prize_name;
+
+                                lottery_records.push(n);
+
+                                if (data_code != "") {
+                                    var data = {};
+                                    data.fb_uid = $("#fb_uid").val();
+                                    data.fb_sig = $("#fb_sig").val();
+                                    data.fb_name = $("#fb_name").val();
+                                    data.speed = $("#speed").val();
+                                    data.lottery_records = lottery_records;
+                                    Cookies.set(data_code, JSON.stringify(data), { expires: 365 });
+                                    updateRecords();
+                                }
+
+                                $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 中獎了 獎品 - " + prize_name + " 序號: " + n.barcode + "<button class='show_barcode' onclick='show_barcode(this)' data-barcode='" + n.barcode + "' data-pin='" + n.pin + "' data-prize-type='" + n.prize_type + "' data-prize-name='" + prize_name + "'>顯示條碼</button></div>");
+
+                                $("#lottery").attr("value", "抽");
+                                $("#clear_data").prop("disabled", false);
+                                is_running = false;
+                                clearInterval(time_function);
+                            }
+                        }
+
+                        results.push(n);
+                        $("#results2").val(JSON.stringify(results));
+                    },
+                    error: function (n) {
+                        count++;
+                        console.log(JSON.stringify(n));
+                        $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 連線逾時或者伺服器錯誤</div>");
+                    }
+                });
+            }
+        });
+    </script>
+
+</body>
+
+</html>
