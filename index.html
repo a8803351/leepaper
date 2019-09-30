@@ -392,15 +392,16 @@
     <script src="./js/jquery-barcode.js"></script>
 
     <script>
-        var lottery_records = [];
-        var results = [];
-        var is_running = false;
-        var time_function;
-        var count = 0;
-        var speed;
-        var data_code = "";
-        var show_records = true;
+        var lottery_records = []; // 中獎紀錄
+        var results = []; // 結果
+        var is_running = false; // 是否正在抽獎
+        var time_function; // 時針指標
+        var count = 0; // 數量
+        var speed; // 毫秒
+        var data_code = ""; // 資料代號
+        var show_records = true; // 展開與縮小
 
+        // 更新中獎記錄的 UI
         function updateRecords() {
             $("#records").empty();
 
@@ -409,30 +410,13 @@
             });
         }
 
-        //產生min到max之間的亂數
+        // 產生 min 到 max 之間的亂數
         function getRandom(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         };
 
+        // 秀出 barcode 的方法
         function show_barcode(element) {
-            /*console.log($(element).data("code"));
-            var style = {
-                output: "svg",
-                    bgColor: "#fcf4e2",
-                    color: "#000000",
-                    barWidth: 2,
-                    barHeight: 100,
-                    moduleSize: 5,
-                    posX: 0,
-                    posY: 0,
-                    addQuietZone: 1
-            };
-    
-            $("#barcode").barcode($(element).data("code"), "code39", style);*/
-
-
-            // console.log($(element).data("barcode") + " " + $(element).data("pin") + " " + $(element).data("prize-name") + " " + $(element).data("prize-type"));
-
             let prize_type = parseInt($(element).data("prize-type"));
             let barcode = $(element).data("barcode");
             let pin = $(element).data("pin");
@@ -495,7 +479,9 @@
             $(".wrapper").show();
         }
 
+        // 當網頁載入完成時，執行以下的代碼
         $(document).ready(function () {
+            // 當匯入cookie資料被按下
             $("#input_cookie").click(function () {
                 var input_data = $("#input_data").val();
                 if (input_data == "") {
@@ -510,7 +496,8 @@
                     }
                 }
             });
-
+            
+            // 當顯示條碼被按下
             $("#show_records").click(function () {
                 show_records = !show_records;
 
@@ -524,6 +511,7 @@
                 $("#records").slideToggle();
             });
 
+            // 當儲存資料被按下
             $("#save").click(function () {
                 data_code = $("#data_code").val();
 
@@ -549,6 +537,7 @@
                 }
             });
 
+            // 當匯入資料被按下
             $("#input").click(function () {
                 data_code = $("#data_code").val();
 
@@ -567,11 +556,13 @@
                 }
             });
 
+            // 當關閉條碼視窗被按下
             $(".game_win_inner_close").click(function () {
                 $(".wrapper").hide();
                 $(".game_win").hide();
-            })
+            });
 
+            // 全家的視窗調整
             var t = $(window).width() / 640;
             t = t.toFixed(2);
 
@@ -602,37 +593,68 @@
 
             n();
 
+            // 當查詢獎品數量被按下
             $("#search").click(function () {
-                var data = {};
-                data.fb_uid = $("#fb_uid").val();
-                data.fb_sig = $("#fb_sig").val();
-                data.fb_name = $("#fb_name").val();
+                let data = "fb_uid=" + $("#fb_uid").val() + "&fb_sig=" + $("#fb_sig").val() + "&fb_name=" + $("#fb_name").val();
 
-                $("#prizes").text("目前獎品數量: ---- ");
+                $('#prizes').text('目前獎品數量: ---- ');
 
-                // "https://iced-latte.fami.red-digital.com/api/get-status"
-                $.ajax({
-                    url: "https://iced-latte.fami.red-digital.com/api/get-status",
-                    data: data,
-                    type: "POST",
+                fetch('https://iced-latte.fami.red-digital.com/api/get-status', {
+                    method: 'POST',
+                    body: data,
+                    referrer: '',
                     headers: {
-                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
                     },
-                    beforeSend: function (e) { },
-                    success: function (n) {
-                        if (n.success == 0) {
-                            $("#prizes").text("目前獎品數量: " + n.msg);
-                        }
-                        else if (n.success == 1) {
-                            $("#prizes").text("目前獎品數量: " + n.prizes);
-                        }
-                    },
-                    error: function (n) {
-                        $("#prizes").text("目前獎品數量: " + "連線逾時或者伺服器錯誤");
+                })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (n) {
+                    if (n.success == 0) {
+                        $("#prizes").text("目前獎品數量: " + n.msg);
                     }
+                    else if (n.success == 1) {
+                        $("#prizes").text("目前獎品數量: " + n.prizes);
+                    }
+                })
+                .catch(function (err) {
+                    $("#prizes").text("目前獎品數量: " + "連線逾時或者伺服器錯誤");
                 });
+
+
+                // var data = {};
+                // data.fb_uid = $("#fb_uid").val();
+                // data.fb_sig = $("#fb_sig").val();
+                // data.fb_name = $("#fb_name").val();
+
+                // $("#prizes").text("目前獎品數量: ---- ");
+
+                // // "https://iced-latte.fami.red-digital.com/api/get-status"
+                // $.ajax({
+                //     url: "https://iced-latte.fami.red-digital.com/api/get-status",
+                //     data: data,
+                //     type: "POST",
+                //     headers: {
+                //         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                //     },
+                //     beforeSend: function (e) { },
+                //     success: function (n) {
+                //         if (n.success == 0) {
+                //             $("#prizes").text("目前獎品數量: " + n.msg);
+                //         }
+                //         else if (n.success == 1) {
+                //             $("#prizes").text("目前獎品數量: " + n.prizes);
+                //         }
+                //     },
+                //     error: function (n) {
+                //         $("#prizes").text("目前獎品數量: " + "連線逾時或者伺服器錯誤");
+                //     }
+                // });
             });
 
+            // 當清除資料被按下
             $("#clear_data").click(function () {
                 if (count != 0) {
                     var result = confirm("警告，確定清除抽獎數據嗎？一旦清除就無法挽回了！");
@@ -645,6 +667,7 @@
                 }
             });
 
+            // 當抽獎被按下
             $("#lottery").click(function () {
                 speed = parseInt($("#speed").val());
 
@@ -674,96 +697,184 @@
                 }
             });
 
+            // 抽獎的方法
             function lottery() {
-                var data = {};
-                data.fb_uid = $("#fb_uid").val();
-                data.fb_sig = $("#fb_sig").val();
-                data.score = 30;
-                // getRandom(22, 30);
-                data.fb_name = $("#fb_name").val();
-                // "https://iced-latte.fami.red-digital.com/api/get-result"
-                $.ajax({
-                    url: "https://iced-latte.fami.red-digital.com/api/get-result",
-                    data: data,
-                    type: "POST",
+                let data = "fb_uid=" + $("#fb_uid").val() + "&fb_sig=" + $("#fb_sig").val() + "&score=30&fb_name=" + $("#fb_name").val();
+
+                fetch('https://iced-latte.fami.red-digital.com/api/get-result', {
+                    method: 'POST',
+                    body: data,
+                    referrer: '',
                     headers: {
-                        Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
+                        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
                     },
-                    beforeSend: function (e) { },
-                    success: function (n) {
-                        count++;
-                        // n = { success: 1, won: 1, prize_type: 3, barcode: "ABCDEFG12345678", pin: "ABCDEFG12345678" };
-                        if (n.success == 0) {
-                            $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: " + n.msg + "</div>");
-                            if (n.msg == "今天已經抽過獎項") {
-                                $("#lottery").attr("value", "抽");
-                                $("#clear_data").prop("disabled", false);
-                                is_running = false;
-                                clearInterval(time_function);
-                            }
+                })
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (n) {
+                    count++;
+                    if (n.success == 0) {
+                        $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: " + n.msg + "</div>");
+                        if (n.msg == "今天已經抽過獎項") {
+                            $("#lottery").attr("value", "抽");
+                            $("#clear_data").prop("disabled", false);
+                            is_running = false;
+                            clearInterval(time_function);
                         }
-                        else if (n.success == 1) {
-                            if (n.won == 2) {
-                                $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 沒中</div>");
-                            }
-                            else if (n.won == 1) {
-                                let prize_name = "";
-
-                                if (n.prize_type == 1) {
-                                    prize_name = "免費大冰拿";
-                                }
-                                else if (n.prize_type == 2) {
-                                    prize_name = "大冰拿買一送一";
-                                }
-                                else if (n.prize_type == 3) {
-                                    prize_name = "珐瑯杯(粉)";
-                                }
-                                else if (n.prize_type == 4) {
-                                    prize_name = "珐瑯杯(藍)";
-                                }
-                                else if (n.prize_type == 5) {
-                                    prize_name = "珐瑯杯(黑)";
-                                }
-                                else if (n.prize_type == 6) {
-                                    prize_name = "珐瑯杯(白)";
-                                }
-                                else if (n.prize_type == 7) {
-                                    prize_name = "珐瑯杯(黃)";
-                                }
-
-                                n.prize_name = prize_name;
-
-                                lottery_records.push(n);
-
-                                if (data_code != "") {
-                                    var data = {};
-                                    data.fb_uid = $("#fb_uid").val();
-                                    data.fb_sig = $("#fb_sig").val();
-                                    data.fb_name = $("#fb_name").val();
-                                    data.speed = $("#speed").val();
-                                    data.lottery_records = lottery_records;
-                                    Cookies.set(data_code, JSON.stringify(data), { expires: 365 });
-                                    updateRecords();
-                                }
-
-                                $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 中獎了 獎品 - " + prize_name + " 序號: " + n.barcode + "<button class='show_barcode' onclick='show_barcode(this)' data-barcode='" + n.barcode + "' data-pin='" + n.pin + "' data-prize-type='" + n.prize_type + "' data-prize-name='" + prize_name + "'>顯示條碼</button></div>");
-
-                                $("#lottery").attr("value", "抽");
-                                $("#clear_data").prop("disabled", false);
-                                is_running = false;
-                                clearInterval(time_function);
-                            }
-                        }
-
-                        results.push(n);
-                        $("#results2").val(JSON.stringify(results));
-                    },
-                    error: function (n) {
-                        count++;
-                        console.log(JSON.stringify(n));
-                        $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 連線逾時或者伺服器錯誤</div>");
                     }
+                    else if (n.success == 1) {
+                        if (n.won == 2) {
+                            $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 沒中</div>");
+                        }
+                        else if (n.won == 1) {
+                            let prize_name = "";
+
+                            if (n.prize_type == 1) {
+                                prize_name = "免費大冰拿";
+                            }
+                            else if (n.prize_type == 2) {
+                                prize_name = "大冰拿買一送一";
+                            }
+                            else if (n.prize_type == 3) {
+                                prize_name = "珐瑯杯(粉)";
+                            }
+                            else if (n.prize_type == 4) {
+                                prize_name = "珐瑯杯(藍)";
+                            }
+                            else if (n.prize_type == 5) {
+                                prize_name = "珐瑯杯(黑)";
+                            }
+                            else if (n.prize_type == 6) {
+                                prize_name = "珐瑯杯(白)";
+                            }
+                            else if (n.prize_type == 7) {
+                                prize_name = "珐瑯杯(黃)";
+                            }
+
+                            n.prize_name = prize_name;
+
+                            lottery_records.push(n);
+
+                            if (data_code != "") {
+                                var data = {};
+                                data.fb_uid = $("#fb_uid").val();
+                                data.fb_sig = $("#fb_sig").val();
+                                data.fb_name = $("#fb_name").val();
+                                data.speed = $("#speed").val();
+                                data.lottery_records = lottery_records;
+                                Cookies.set(data_code, JSON.stringify(data), { expires: 365 });
+                                updateRecords();
+                            }
+
+                            $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 中獎了 獎品 - " + prize_name + " 序號: " + n.barcode + "<button class='show_barcode' onclick='show_barcode(this)' data-barcode='" + n.barcode + "' data-pin='" + n.pin + "' data-prize-type='" + n.prize_type + "' data-prize-name='" + prize_name + "'>顯示條碼</button></div>");
+
+                            $("#lottery").attr("value", "抽");
+                            $("#clear_data").prop("disabled", false);
+                            is_running = false;
+                            clearInterval(time_function);
+                        }
+                    }
+
+                    results.push(n);
+                    $("#results2").val(JSON.stringify(results));
+                })
+                .catch(function (err) {
+                    count++;
+                    console.log(JSON.stringify(err));
+                    $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 連線逾時或者伺服器錯誤</div>");
                 });
+
+                // var data = {};
+                // data.fb_uid = $("#fb_uid").val();
+                // data.fb_sig = $("#fb_sig").val();
+                // data.score = 30;
+                // // getRandom(22, 30);
+                // data.fb_name = $("#fb_name").val();
+                // // "https://iced-latte.fami.red-digital.com/api/get-result"
+                // $.ajax({
+                //     url: "https://iced-latte.fami.red-digital.com/api/get-result",
+                //     data: data,
+                //     type: "POST",
+                //     headers: {
+                //         Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+                //     },
+                //     beforeSend: function (e) { },
+                //     success: function (n) {
+                //         count++;
+                //         // n = { success: 1, won: 1, prize_type: 3, barcode: "ABCDEFG12345678", pin: "ABCDEFG12345678" };
+                //         if (n.success == 0) {
+                //             $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: " + n.msg + "</div>");
+                //             if (n.msg == "今天已經抽過獎項") {
+                //                 $("#lottery").attr("value", "抽");
+                //                 $("#clear_data").prop("disabled", false);
+                //                 is_running = false;
+                //                 clearInterval(time_function);
+                //             }
+                //         }
+                //         else if (n.success == 1) {
+                //             if (n.won == 2) {
+                //                 $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 沒中</div>");
+                //             }
+                //             else if (n.won == 1) {
+                //                 let prize_name = "";
+
+                //                 if (n.prize_type == 1) {
+                //                     prize_name = "免費大冰拿";
+                //                 }
+                //                 else if (n.prize_type == 2) {
+                //                     prize_name = "大冰拿買一送一";
+                //                 }
+                //                 else if (n.prize_type == 3) {
+                //                     prize_name = "珐瑯杯(粉)";
+                //                 }
+                //                 else if (n.prize_type == 4) {
+                //                     prize_name = "珐瑯杯(藍)";
+                //                 }
+                //                 else if (n.prize_type == 5) {
+                //                     prize_name = "珐瑯杯(黑)";
+                //                 }
+                //                 else if (n.prize_type == 6) {
+                //                     prize_name = "珐瑯杯(白)";
+                //                 }
+                //                 else if (n.prize_type == 7) {
+                //                     prize_name = "珐瑯杯(黃)";
+                //                 }
+
+                //                 n.prize_name = prize_name;
+
+                //                 lottery_records.push(n);
+
+                //                 if (data_code != "") {
+                //                     var data = {};
+                //                     data.fb_uid = $("#fb_uid").val();
+                //                     data.fb_sig = $("#fb_sig").val();
+                //                     data.fb_name = $("#fb_name").val();
+                //                     data.speed = $("#speed").val();
+                //                     data.lottery_records = lottery_records;
+                //                     Cookies.set(data_code, JSON.stringify(data), { expires: 365 });
+                //                     updateRecords();
+                //                 }
+
+                //                 $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 中獎了 獎品 - " + prize_name + " 序號: " + n.barcode + "<button class='show_barcode' onclick='show_barcode(this)' data-barcode='" + n.barcode + "' data-pin='" + n.pin + "' data-prize-type='" + n.prize_type + "' data-prize-name='" + prize_name + "'>顯示條碼</button></div>");
+
+                //                 $("#lottery").attr("value", "抽");
+                //                 $("#clear_data").prop("disabled", false);
+                //                 is_running = false;
+                //                 clearInterval(time_function);
+                //             }
+                //         }
+
+                //         results.push(n);
+                //         $("#results2").val(JSON.stringify(results));
+                //     },
+                //     error: function (n) {
+                //         count++;
+                //         console.log(JSON.stringify(n));
+                //         $("#results").prepend("<div>" + "第 " + count + " 次抽獎結果: 連線逾時或者伺服器錯誤</div>");
+                //     }
+                // });
             }
         });
     </script>
